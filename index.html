@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>A Special Surprise for You</title>
+    <title>Be My Valentine?</title>
     <style>
         :root {
-            --soft-pink: #ffdae0;
-            --hot-pink: #ff4d6d;
-            --deep-red: #c9184a;
-            --white: #ffffff;
+            --pink: #ffafbd;
+            --rose: #ffc3a0;
+            --dark-pink: #e91e63;
         }
 
         * {
@@ -20,203 +19,189 @@
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(180deg, var(--soft-pink) 0%, #fff0f3 100%);
-            height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden;
-            color: var(--deep-red);
-        }
-
-        /* Floating Hearts Background */
-        .heart-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(110vh) scale(0); opacity: 0; }
-            20% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-        }
-
-        .heart-particle {
-            position: absolute;
-            color: var(--hot-pink);
-            font-size: 20px;
-            animation: float linear infinite;
-        }
-
-        /* Envelope Styling */
-        .wrapper {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            width: 100%;
-        }
-
-        .envelope-wrapper {
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            width: 280px;
-            height: 180px;
-            background-color: var(--hot-pink);
-            position: relative;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .envelope-wrapper::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            z-index: 2;
-            border-top: 100px solid var(--hot-pink);
-            border-left: 140px solid transparent;
-            border-right: 140px solid transparent;
-            transform-origin: top;
-            transition: transform 0.5s 0.3s ease;
-        }
-
-        .envelope-wrapper.open::before {
-            transform: rotateX(180deg);
-            z-index: 0;
-        }
-
-        /* The Letter / Image Reveal */
-        .letter {
-            position: absolute;
-            bottom: 5px;
-            left: 10px;
-            width: 260px;
-            height: 160px;
-            background: var(--white);
-            border-radius: 8px;
-            transition: all 0.7s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 15px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--pink), var(--rose));
+            font-family: 'Segoe UI', sans-serif;
             overflow: hidden;
-            z-index: 1;
+            touch-action: none;
         }
 
-        .envelope-wrapper.open .letter {
-            height: 480px;
-            bottom: -150px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-        }
-
-        .photo {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            opacity: 0;
-            transition: opacity 0.5s 0.8s ease;
-        }
-
-        .envelope-wrapper.open .photo {
-            opacity: 1;
-        }
-
-        .poem {
-            font-size: 0.95rem;
-            line-height: 1.5;
+        #container {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 2.5rem;
+            border-radius: 30px;
+            width: 85%;
+            max-width: 400px;
             text-align: center;
-            font-style: italic;
-            opacity: 0;
-            transition: opacity 0.5s 1.2s ease;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.4);
+            z-index: 10;
         }
 
-        .envelope-wrapper.open .poem {
-            opacity: 1;
+        h1 {
+            color: #e42121;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            transition: all 0.5s ease;
         }
 
-        .tap-instruction {
-            margin-top: 40px;
+        .buttons-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            min-height: 100px;
+        }
+
+        button {
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
             font-weight: bold;
-            letter-spacing: 1px;
-            animation: pulse 1.5s infinite;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s;
         }
 
-        @keyframes pulse {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
+        #yesBtn {
+            background-color: #ff4b2b;
+            color: white;
+            z-index: 5;
         }
 
-        .hidden { display: none; }
+        #noBtn {
+            background: white;
+            color: #ff4b2b;
+            position: relative; 
+            z-index: 100;
+        }
+
+        /* Celebration Particle */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .heart-float {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 4s linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="heart-bg" id="heartBg"></div>
-
-    <div class="wrapper">
-        <div class="envelope-wrapper" id="envelope" onclick="openLetter()">
-            <div class="letter">
-                <img src="C:\Users\Admin\Desktop\HVD\MG.jpg" alt="Special Memory" class="photo">
-                
-                <div class="poem">
-                    "In a world of constant change,<br>
-                    You are my favorite place.<br>
-                    Every moment we share,<br>
-                    Is a memory I’ll always chase."<br>
-                    <strong>Happy Valentine's Day! ❤️</strong>
-                </div>
-            </div>
+    <div id="container">
+        <h1 id="question">Will you be my Valentine? 💖</h1>
+        <div class="buttons-wrapper">
+            <button id="yesBtn">Yes!</button>
+            <button id="noBtn">No</button>
         </div>
-        <p class="tap-instruction" id="tapText">TAP TO OPEN</p>
     </div>
 
     <script>
-        // Create floating hearts
-        const heartContainer = document.getElementById('heartBg');
-        const heartIcons = ['❤️', '💖', '💝', '💕', '🌸'];
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const question = document.getElementById('question');
+        
+        let hasEscaped = false;
+        let angle = 0;
+        let baseScale = 1;
+        let misses = 0;
 
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart-particle');
-            heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            heartContainer.appendChild(heart);
+        function moveNoButton() {
+            misses++;
+            baseScale += 0.07;
+            yesBtn.style.transform = `scale(${baseScale})`;
+            
+            // Shift Yes button color toward Gold
+            const hue = Math.min(misses * 5, 45); 
+            yesBtn.style.backgroundColor = `hsl(${0 + hue}, 100%, ${50 + (hue/2)}%)`;
 
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
+            if (!hasEscaped) {
+                const rect = noBtn.getBoundingClientRect();
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = rect.left + 'px';
+                noBtn.style.top = rect.top + 'px';
+                hasEscaped = true;
+            }
+
+            angle += Math.PI / 2 + (Math.random() * Math.PI); 
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const r = Math.min(window.innerWidth, window.innerHeight) * 0.22;
+            
+            noBtn.style.left = `${centerX + Math.cos(angle) * r - (noBtn.offsetWidth / 2)}px`;
+            noBtn.style.top = `${centerY + Math.sin(angle) * r - (noBtn.offsetHeight / 2)}px`;
         }
 
-        setInterval(createHeart, 300);
+        function createConfetti() {
+            const colors = ['#ff4b2b', '#ffafbd', '#ffffff', '#ffedbc', '#e91e63'];
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = '50%';
+                confetti.style.top = '50%';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                
+                const destinationX = (Math.random() - 0.5) * window.innerWidth * 1.5;
+                const destinationY = (Math.random() - 0.5) * window.innerHeight * 1.5;
+                const rotation = Math.random() * 720;
+                const delay = Math.random() * 200;
 
-        // Interaction Logic
-        function openLetter() {
-            const envelope = document.getElementById('envelope');
-            const tapText = document.getElementById('tapText');
-            
-            envelope.classList.toggle('open');
-            
-            if(envelope.classList.contains('open')) {
-                tapText.classList.add('hidden');
-            } else {
-                setTimeout(() => {
-                    tapText.classList.remove('hidden');
-                }, 500);
+                document.body.appendChild(confetti);
+
+                confetti.animate([
+                    { transform: 'translate(-50%, -50%) scale(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translate(calc(-50% + ${destinationX}px), calc(-50% + ${destinationY}px)) scale(1) rotate(${rotation}deg)`, opacity: 0 }
+                ], {
+                    duration: 1500 + Math.random() * 1000,
+                    easing: 'cubic-bezier(0, .9, .57, 1)',
+                    delay: delay
+                }).onfinish = () => confetti.remove();
             }
+        }
+
+        noBtn.addEventListener('mouseover', moveNoButton);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNoButton(); });
+
+        yesBtn.addEventListener('click', () => {
+            question.innerHTML = "Very Good! ❤️";
+            question.style.fontSize = "2.2rem";
+            noBtn.style.display = 'none';
+            yesBtn.style.display = 'none';
+            document.body.style.background = "#ff416c";
+            
+            createConfetti();
+            // Continuous hearts after the initial blast
+            setInterval(spawnHeart, 200);
+        });
+
+        function spawnHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart-float';
+            heart.innerHTML = ['❤️','💖','✨','🌸'][Math.floor(Math.random()*4)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
         }
     </script>
 </body>
